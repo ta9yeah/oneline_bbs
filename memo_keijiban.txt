@@ -1,0 +1,24 @@
+INSERT INTO `oneline_bbs`.`posts` (`id`, `nickname`, `comment`, `created`) VALUES ('1', 'testname', 'testcoomen', '2015-12-02 00:00:00');
+
+SELECT `id`, `nickname`, `comment`, `created` FROM `posts` WHERE 1
+
+<tabel>
+	<tr>
+		<th>id</th>
+		<th>name</th>
+		<th>comment</th>
+	</tr>
+
+	<?php
+		while(1) {
+			if (何かしらの条件) {
+				break;
+			}
+			echo '<tr>';
+			echo	'<th>'.$id.'</th>';
+			echo	'<th>'.$name.'</th>';
+			echo	'<th>'.$comment.'</th>';
+			echo '</tr>';
+		}
+	?>
+</table>
