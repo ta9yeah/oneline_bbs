@@ -1,15 +1,17 @@
 <?php
-  //  POST送信が行われたら、下記の処理を実行
-  if (isset($_POST['nickname']) && isset($_POST['comment'])) { // isset() !
-  //if (isset($_POST['nickname'] && $_POST['comment'])){
-  //if (isset($_POST['nickname' && 'comment'])){
-
-    //　データベースに接続
+  //　データベースに接続
     $dsn = 'mysql:dbname=oneline_bbs;host=localhost';
     $user = 'root';
     $password = '';
     $dbh = new PDO($dsn, $user, $password);
     $dbh->query('SET NAMES utf8');
+
+
+  //  POST送信が行われたら、下記の処理を実行
+  if (isset($_POST) && !empty($_POST)) {
+  //if (isset($_POST['nickname']) && isset($_POST['comment'])) { // isset() !
+  //if (isset($_POST['nickname'] && $_POST['comment'])){
+  //if (isset($_POST['nickname' && 'comment'])){
 
     $nickname = $_POST['nickname'];
     $comment  = $_POST['comment'];
@@ -20,27 +22,14 @@
     //　INSERT文実行
     $stmt->execute();
 
-    // // 表示をする
-    // $sql = 'SELECT * FROM `oneline_bbs`.`posts` WHERE 1 '; // スペースを必ず入れる　「1」無条件での意（省略可能）
-    // $stmt = $dbh->prepare($sql);
-    // $stmt->execute();
-
-    // while(1) {
-    //   $rec = $stmt->fetch(PDO::FETCH_ASSOC);
-    //   if ($rec == false) {
-    //     break;
-    //   }
-    //   echo $rec['id'];
-    //   echo '&nbsp;'; 
-    //   echo $rec['nickname'];
-    //   echo $rec['comment'];
-    //   echo $rec['created'];
-    //   echo '<br>';
-
-    // }
-
-    // // データベースから切断
-    // $dbh = null;
+    //　SQL文作成実行
+    $sql = 'SELECT * FROM `oneline_bbs`.`posts` WHERE 1 '; // スペースを必ず入れる　「　1　」無条件での意（省略可能）
+    $stmt = $dbh->prepare($sql);
+    //　INSERT文実行
+    $stmt->execute();
+   
+    // データベースから切断
+    $dbh = null;
   }
 ?>
 
@@ -61,23 +50,9 @@
     <!--
     <h2><a href="#">nickname Eriko</a><span>2015-12-02 10:10:20</span></h2>
     <p>つぶやきコメント</p>
-
-    <h2><a href="#">nickname Eriko</a><span>2015-12-02 10:10:10</span></h2>
-    <p>つぶやきコメント2</p>
     -->
 
     <?php
-      // 表示をする
-      $dsn = 'mysql:dbname=oneline_bbs;host=localhost';
-      $user = 'root';
-      $password = '';
-      $dbh = new PDO($dsn, $user, $password);
-      $dbh->query('SET NAMES utf8');
-
-      $sql = 'SELECT * FROM `oneline_bbs`.`posts` WHERE 1 '; // スペースを必ず入れる　「　1　」無条件での意（省略可能）
-      $stmt = $dbh->prepare($sql);
-      $stmt->execute();
-
       while(1) {
         $rec = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($rec == false) {
@@ -87,10 +62,6 @@
         echo '<span>'.$rec['created'].'</span></h2>';
         echo '<p>'.$rec['comment'].'</p>';        
       }
-
-      // データベースから切断
-      $dbh = null;
-
     ?>
   </body>
 </html>
