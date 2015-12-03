@@ -1,3 +1,10 @@
+<?php
+  if (iseet($_POST) && !empty($_POST)) {
+
+  }
+?>
+
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
