@@ -21,14 +21,24 @@
 
     //　SQL文作成実行
     $sql = 'SELECT * FROM `oneline_bbs`.`posts` WHERE 1 '; // スペースを必ず入れる　「　1　」無条件での意（省略可能）
-    $stmt = $dbh->prepare($sql);
+    $stmt1 = $dbh->prepare($sql);
     //　INSERT文実行
-    $stmt->execute();
+    $stmt1->execute();
     // データベースから切断
     $dbh = null;
-  }
-?>
+  
 
+  while(1) {
+    $rec = $stmt1->fetch(PDO::FETCH_ASSOC);
+    if ($rec == false) {
+      break;
+    }
+    echo '<h2><a href="#">'.$rec['nickname'].'</a>';
+    echo '<span>'.$rec['created'].'</span></h2>';
+    echo '<p>'.$rec['comment'].'</p>';         
+  }
+}
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -37,30 +47,11 @@
 
 </head>
 <body>
-    <form action="bbs.php" method="post">
+    <form action="test.php" method="post">
       <input type="text" name="nickname" placeholder="nickname" required>
       <textarea type="text" name="comment" placeholder="comment" required></textarea>
       <button type="submit" >つぶやく</button>
     </form>
-    
-    <!--
-    <h2><a href="#">nickname Eriko</a><span>2015-12-02 10:10:20</span></h2>
-    <p>つぶやきコメント</p>
-    -->
-
-    <?php
-      while(1) {
-        $rec = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($rec == false) {
-          break;
-        }
-        echo '<h2><a href="#">'.$rec['nickname'].'</a>';
-        echo '<span>'.$rec['created'].'</span></h2>';
-        echo '<p>'.$rec['comment'].'</p>';        
-      }
-    ?>
+   
   </body>
 </html>
-
-
-
